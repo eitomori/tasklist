@@ -3,11 +3,11 @@ package models.validators;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.Tasks;
+import models.Task;
 
-public class TasksValidator {
+public class TaskValidator {
     // バリデーションを実行する
-    public static List<String> validate(Tasks m) {
+    public static List<String> validate(Task m) {
         List<String> errors = new ArrayList<String>();
 
 
@@ -18,8 +18,6 @@ public class TasksValidator {
 
         return errors;
     }
-
-    // タイトルの必須入力チェック
 
 
     // メッセージの必須入力チェック

@@ -4,26 +4,26 @@
 <c:import url="../layout/app.jsp">
     <c:param name="content">
         <c:choose>
-            <c:when test="${tasks != null}">
-                <h2>id : ${tasks.id} のメッセージ詳細ページ</h2>
+            <c:when test="${task != null}">
+                <h2>id : ${task.id} のメッセージ詳細ページ</h2>
 
 <table>
                     <tbody>
                         <tr>
                             <th>タイトル</th>
-                            <td><c:out value="${tasks.title}" /></td>
+                            <td><c:out value="${task.title}" /></td>
                         </tr>
                         <tr>
                             <th>メッセージ</th>
-                            <td><c:out value="${tasks.content}" /></td>
+                            <td><c:out value="${task.content}" /></td>
                         </tr>
                         <tr>
                             <th>作成日時</th>
-                            <td><fmt:formatDate value="${tasks.created_at}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                            <td><fmt:formatDate value="${task.created_at}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                         </tr>
                         <tr>
                             <th>更新日時</th>
-                            <td><fmt:formatDate value="${tasks.updated_at}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                            <td><fmt:formatDate value="${task.updated_at}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                         </tr>
                     </tbody>
                 </table>
