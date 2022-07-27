@@ -38,54 +38,33 @@ public class UpdateServlet extends HttpServlet {
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-            // セッションスコープからメッセージのIDを取得して
-            // 該当のIDのメッセージ1件のみをデータベースから取得
-            Task m = em.find(Task.class, (Integer)(request.getSession().getAttribute("tasks_id")));
-
-            // フォームの内容を各フィールドに上書き
+            Task m = em.find(Task.class, (Integer)(request.getSession().getAttribute("task_id")));
 
             String content = request.getParameter("content");
             m.setContent(content);
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            m.setUpdated_at(currentTime);       // 更新日時のみ上書き
-
+            m.setUpdated_at(currentTime);
             List<String> errors = TaskValidator.validate(m);
             if(errors.size() > 0) {
                 em.close();
 
-                // フォームに初期値を設定、さらにエラーメッセージを送る
                 request.setAttribute("_token", request.getSession().getId());
-                request.setAttribute("tasks", m);
+                request.setAttribute("task", m);
                 request.setAttribute("errors", errors);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/tasks/edit.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/edit.jsp");
                 rd.forward(request, response);
             } else {
-                // データベースを更新
                 em.getTransaction().begin();
                 em.getTransaction().commit();
-                request.getSession().setAttribute("flush", "更新が完了しました。");
+                request.getSession().setAttribute("flush", "更新が完了しました");
                 em.close();
 
-                // セッションスコープ上の不要になったデータを削除
-                request.getSession().removeAttribute("tasks_id");
+                request.getSession().removeAttribute("task_id");
 
-                // indexページへリダイレクト
                 response.sendRedirect(request.getContextPath() + "/index");
             }
-
-            // データベースを更新
-            em.getTransaction().begin();
-            em.getTransaction().commit();
-            request.getSession().setAttribute("flush", "更新が完了しました。");
-            em.close();
-
-            // セッションスコープ上の不要になったデータを削除
-            request.getSession().removeAttribute("tasks_id");
-
-            // indexページへリダイレクト
-            response.sendRedirect(request.getContextPath() + "/index");
         }
     }
 }

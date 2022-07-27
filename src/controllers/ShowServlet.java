@@ -31,17 +31,15 @@ public class ShowServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    EntityManager em = DBUtil.createEntityManager();
+        EntityManager em = DBUtil.createEntityManager();
 
-    // 該当のIDのメッセージ1件のみをデータベースから取得
-    Task m = em.find(Task.class, Integer.parseInt(request.getParameter("id")));
+        Task m = em.find(Task.class, Integer.parseInt(request.getParameter("id")));
 
-    em.close();
+        em.close();
 
-    // メッセージデータをリクエストスコープにセットしてshow.jspを呼び出す
-    request.setAttribute("task", m);
+        request.setAttribute("task", m);
 
-    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/tasks/show.jsp");
-    rd.forward(request, response);
-}
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/show.jsp");
+        rd.forward(request, response);
+    }
 }
