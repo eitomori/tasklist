@@ -57,7 +57,7 @@ public class CreateServlet extends HttpServlet {
                 request.setAttribute("tasks", m);
                 request.setAttribute("errors", errors);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/new.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/tasks/new.jsp");
                 rd.forward(request, response);
             } else {
                 // データベースに保存
